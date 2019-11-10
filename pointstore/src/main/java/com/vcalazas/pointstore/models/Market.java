@@ -11,10 +11,10 @@ public class Market {
 
 	public Market() {}
 
-	public Market(int id) throws Exception {
+	public Market(int marketId) throws Exception {
 		super();
 		try {
-			ResultSet r =   new SqlConnector().search("select * from market ;");
+			ResultSet r =   new SqlConnector().search("select * from market where id ="+marketId+" ;");
 			if(r != null) {
 				while (r.next()) {
 					this.id = r.getInt("id");
@@ -24,7 +24,7 @@ public class Market {
 				throw new Exception("Erro ao consultar o banco");
 			}
 		} catch (Exception e) {
-			throw new Exception("Erro ao consultar o banco");
+			throw e;
 		}
 	}
 

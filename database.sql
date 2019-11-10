@@ -59,8 +59,15 @@ create table publicacao(
 );
 
 create table vendapublicacao(
-	vendaId 		int(10) not null,
-    publicacaoId	int(10) not null,
+	vendaId 			int(10) 	not null,
+    publicacaoId		int(10) 	not null,
+    marketId			int(10)  	not null,
+    datahorainicio 		datetime	not null,
+    datahorafim 		datetime	not null,
+    valor 				int(100) 	not null,
+    titulo	 			varchar(255)not null,
+    descricao 			text(5000)  not null,
+    sobrepordescricao	tinyint 	not null,
 	FOREIGN KEY(vendaId) REFERENCES venda(id),
     FOREIGN KEY(publicacaoId) REFERENCES publicacao(id)
 );

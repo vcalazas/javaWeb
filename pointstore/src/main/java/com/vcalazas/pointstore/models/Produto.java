@@ -27,11 +27,11 @@ public class Produto {
 		this.estoque = estoque;
 	}
 	
-	public static ArrayList<Produto> getProdutosFromPublicacao(int publicacaoId){
+	public static ArrayList<Produto> getProdutosFromPublicacao(int publicacaoId) throws Exception{
 		return Produto.getProdutosFromPublicacao(publicacaoId, null);
 	}
 	
-	public static ArrayList<Produto> getProdutosFromPublicacao(int publicacaoId, Market market){
+	public static ArrayList<Produto> getProdutosFromPublicacao(int publicacaoId, Market market) throws Exception{
 		ArrayList<Produto> produtos = new ArrayList<Produto>();
 		try {
 			ResultSet r =   new SqlConnector().search("SELECT id, marketId, nome, descricao, valorbruto, estoque  FROM produtopublicacao pp left join produto p on pp.produtoId = p.id where pp.publicacaoId = "+publicacaoId+";");
@@ -66,7 +66,7 @@ public class Produto {
 				throw new Exception("Erro ao consultar o banco");
 			}
 		} catch (Exception e) {
-			// TODO: handle exception
+			throw e;
 		}
 		return produtos;
 	}

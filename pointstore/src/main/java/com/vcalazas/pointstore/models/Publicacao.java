@@ -9,15 +9,15 @@ import com.vcalazas.pointstore.utils.SqlConnector;
 public class Publicacao {
 
 	private int id = 0;
-	private int marketId = 0;
-	private String datahorainicio = "";
-	private String datahorafim = "";
-	private int valor = 0;
-	private String titulo = "";
-	private String descricao = "";
-	private int sobrepordescricao = 0;
-	private Market market = new Market();
-	private ArrayList<Produto> produtos = new ArrayList<Produto>();
+	protected int marketId = 0;
+	protected String datahorainicio = "";
+	protected String datahorafim = "";
+	protected int valor = 0;
+	protected String titulo = "";
+	protected String descricao = "";
+	protected int sobrepordescricao = 0;
+	protected Market market = new Market();
+	protected ArrayList<Produto> produtos = new ArrayList<Produto>();
 
 	public Publicacao() {}
 	
@@ -63,8 +63,7 @@ public class Publicacao {
 				throw new Exception("Erro ao consultar o banco");
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
-			throw new Exception("Erro ao consultar o banco");
+			throw e;
 		}
 		return publicacoes;
 	}
