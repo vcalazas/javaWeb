@@ -18,10 +18,10 @@ public class WsPessoa {
 	@Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
     public Pessoa postlogin(
-            Test test
+    		Pessoa pessoa
     ) {
         try {
-			return new Pessoa(0, test.message);
+			return Pessoa.login(pessoa);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new Pessoa();
@@ -43,22 +43,22 @@ public class WsPessoa {
 		}
     }
 	
-	@GET
-	@Path("/listar/{id}/{cpf}/{nome}/{genero}")
-	@Consumes({MediaType.APPLICATION_JSON})
-    @Produces({MediaType.APPLICATION_JSON})
-    public Pessoa getListar(
-            @PathParam("id") int id,
-            @PathParam("cpf") String cpf,
-            @PathParam("nome") String nome,
-            @PathParam("genero") int genero
-    ) {
-        try {
-			return new Pessoa(id, null);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return new Pessoa();
-		}
-    }
+//	@GET
+//	@Path("/listar/{id}/{cpf}/{nome}/{genero}")
+//	@Consumes({MediaType.APPLICATION_JSON})
+//    @Produces({MediaType.APPLICATION_JSON})
+//    public Pessoa getListar(
+//            @PathParam("id") int id,
+//            @PathParam("cpf") String cpf,
+//            @PathParam("nome") String nome,
+//            @PathParam("genero") int genero
+//    ) {
+//        try {
+//			return new Pessoa(id, null);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			return new Pessoa();
+//		}
+//    }
 	
 }

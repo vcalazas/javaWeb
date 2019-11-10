@@ -14,11 +14,11 @@ import com.vcalazas.pointstore.models.Test;
 
 public class SqlConnector {
 
-	private static Connection connect() {
+	private Connection connect() {
 		try{  
 			Class.forName("com.mysql.jdbc.Driver");  
 			Connection con = DriverManager.getConnection(  
-					"jdbc:mysql://mysql.vcalazas.com.br/vcalazas","vcalazas","Vec404500");
+					"jdbc:mysql://localhost:3306/marketplace","root","123456789");
 			return con;
 		}catch(Exception e){ 
 			System.out.println(e);
@@ -26,21 +26,21 @@ public class SqlConnector {
 		}  
 	}
 
-	public static ResultSet search(String query) {
+	public ResultSet search(String query) {
 		try {
-			final Connection con = SqlConnector.connect();
+			final Connection con = this.connect();
 			if(con != null ) {
 				Statement stmt = con.createStatement();  
 				ResultSet rs = stmt.executeQuery(query);
-				Timer timer = new Timer(100 , new ActionListener() {
-					public void actionPerformed(ActionEvent evt) {
-						try {
-							con.close();
-						} catch (SQLException e) { }
-					}
-				});
-				timer.setRepeats(false);
-				timer.start();
+//				Timer timer = new Timer(3000 , new ActionListener() {
+//					public void actionPerformed(ActionEvent evt) {
+//						try {
+//							con.close();
+//						} catch (SQLException e) { }
+//					}
+//				});
+//				timer.setRepeats(false);
+//				timer.start();
 
 				return rs;
 			} else {
@@ -53,9 +53,9 @@ public class SqlConnector {
 		}
 	}
 
-	public static ResultSet execute(String query) {
+	public ResultSet execute(String query) {
 		try {
-			final Connection con = SqlConnector.connect();
+			final Connection con = this.connect();
 			if(con != null ) {
 				Statement stmt = con.createStatement();  
 				ResultSet rs = stmt.executeQuery(query);
