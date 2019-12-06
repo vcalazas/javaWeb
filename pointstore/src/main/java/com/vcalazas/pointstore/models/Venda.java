@@ -3,6 +3,7 @@ package com.vcalazas.pointstore.models;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
+import com.vcalazas.pointstore.utils.General;
 import com.vcalazas.pointstore.utils.SqlConnector;
 
 public class Venda {
@@ -10,6 +11,11 @@ public class Venda {
 	private int id = 0;
 	private int pessoaId = 0;
 	private int statusvenda = 0;
+	// 0 - iniciado 
+	// 1 - cancelado 
+	// 2 - erro
+	// 3 - finalizada com sucesso
+	
 	private String datahora  = "";
 	private int valor = 0;
 	private ArrayList<Vendapublicacao> publicacoes = new ArrayList<Vendapublicacao>();
@@ -46,6 +52,29 @@ public class Venda {
 		} catch (Exception e) {
 			throw e;
 		}
+	}
+	
+	public void manter() throws Exception {
+		if(this.pessoaId == 0 || this.pessoaId <= 0) {
+			throw new Exception("Pessoa não informada.");
+		} else {
+			Pessoa p = new Pessoa(this.pessoaId, null);
+			if(p.getCpf() == null || p.getCpf().trim().equals("")) {
+				throw new Exception("Pessoa não existente.");
+			}
+		}
+		
+		if (this.statusvenda == 0) {
+			this.valor = 0;
+			this.datahora = General.getdataIsoString(false);
+		}
+//		ResultSet r =   new SqlConnector().executeStoreProcedure("call manterVenda("+
+//													this.id				+","+
+//													this.pessoaId		+","+
+//													this.statusvenda	+","+
+//													this.datahora		+","+
+//													this.valor			+")");
+//		System.out.println(r);
 	}
 	
 	public void finalizarCompra() {

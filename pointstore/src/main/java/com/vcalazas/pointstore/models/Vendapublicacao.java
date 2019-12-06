@@ -10,6 +10,8 @@ public class Vendapublicacao extends Publicacao {
 	private int vendaId = 0;
 	private int publicacaoId = 0;
 	
+	
+	
 	public static ArrayList<Vendapublicacao> listar(int vendaId) {
 		ArrayList<Vendapublicacao> publicacoes = new ArrayList<Vendapublicacao>();
 		try {

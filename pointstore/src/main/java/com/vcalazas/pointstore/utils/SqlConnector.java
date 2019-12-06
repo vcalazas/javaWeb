@@ -2,6 +2,7 @@ package com.vcalazas.pointstore.utils;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -53,12 +54,40 @@ public class SqlConnector {
 		}
 	}
 
-	public ResultSet execute(String query) {
+	public int execute(String query) {
 		try {
 			final Connection con = this.connect();
 			if(con != null ) {
 				Statement stmt = con.createStatement();  
-				ResultSet rs = stmt.executeQuery(query);
+				int rs = stmt.executeUpdate(query);
+				Timer timer = new Timer(100 , new ActionListener() {
+					public void actionPerformed(ActionEvent evt) {
+						try {
+							con.close();
+						} catch (SQLException e) { }
+					}
+				});
+				timer.setRepeats(false);
+				timer.start();
+
+				return rs;
+			} else {
+				return -1;
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			return -1;
+		}
+	}
+
+	public ResultSet executeStoreProcedure(String query) {
+		try {
+			final Connection con = this.connect();
+			if(con != null ) {
+				Statement stmt = con.createStatement();  
+				CallableStatement cs = con.prepareCall(query);
+				ResultSet rs = cs.executeQuery();
 				Timer timer = new Timer(100 , new ActionListener() {
 					public void actionPerformed(ActionEvent evt) {
 						try {
@@ -79,5 +108,4 @@ public class SqlConnector {
 			return null;
 		}
 	}
-
 }

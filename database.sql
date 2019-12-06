@@ -90,6 +90,26 @@ create table juro(
 	FOREIGN KEY(marketId) REFERENCES market(id)
 );
 
+DELIMITER $$$  
+CREATE PROCEDURE `manterVenda`(
+	in vendaid			int(10),
+	in vendapessoaId 	int(10),
+	in vendastatusvenda int(2),
+    in vendadatahora 	date,
+    in vendavalor 		int(100)
+)  
+BEGIN  
+	if vendaid is null or vendaid = 0
+    then
+		insert into venda ( pessoaId, statusvenda, datahora, valor ) values (vendapessoaId, vendastatusvenda, vendadatahora, vendavalor);
+	else 
+        update venda set pessoaId = vendapessoaId, statusvenda = vendastatusvenda, datahora = vendadatahora, valor = vendavalor where id = vendaid;
+    end if;
+    commit;
+    SELECT max(id) as `ultimoid` from venda;
+END$$$  
+DELIMITER ;  
+
 DELIMITER $$  
 CREATE PROCEDURE `ultimapublicacao`(in mprodutoId int(10), in mpublicacaoId int(10), in mmarketId int(10))  
 BEGIN  
@@ -140,3 +160,6 @@ insert into produto (marketId, nome, descricao, valorbruto, estoque) values (2, 
 
 insert into publicacao (marketId, datahorainicio, datahorafim, valor, titulo, descricao, sobrepordescricao) values (1, "2011-12-18 13:17:17", "2011-12-18 13:17:17", 100000, "Oferta Exclusiva", "", false);
 call ultimapublicacao(1, null, 1);
+
+insert into publicacao (marketId, datahorainicio, datahorafim, valor, titulo, descricao, sobrepordescricao) values (2, "2011-12-18 13:17:17", "2011-12-18 13:17:17", 100000, "SMC - Oferta Exclusiva", "", false);
+call ultimapublicacao(6, null, 2);
